@@ -8,6 +8,7 @@ import numpy as np
 class kmeans():
 
     def __init__(self,feature_vector,r_state=42):
+
         self.feature_vector = feature_vector
         self.r_state = r_state
 
@@ -22,10 +23,13 @@ class kmeans():
 
         X_reduced = PCA(n_components=2).fit_transform(self.feature_vector)
         fig = plt.figure()
+        guardian = np.ones(998)
+        sun = np.zeros(876)
+        both = np.concatenate(sun,guardian)
 
         ax = fig.add_subplot(111)
-        scatter = ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels, s=5)
-
+        ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels,marker="^", s=np.ma.masked_where(both==1,both))
+        scatter = ax.scatter(X_reduced[:, 0], X_reduced[:, 1], c=self.labels,marker="o", s=np.ma.masked_where(both==0,both))
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         plt.colorbar(scatter)
@@ -35,10 +39,10 @@ class kmeans():
     def plot_elbow(self,k_range,fname,individ_plot=False):
         distorsions = []
         for k in k_range:
-            labels, score = k_means.cluster(k)
+            labels, score = self.cluster(k)
             distorsions.append(score)
             if individ_plot:
-                k_means.visualize_data("cluster_"+str(k))
+                self.visualize_data("cluster_"+str(k))
 
         plt.figure(figsize=(15, 5))
         plt.xlabel("number of clusters: k")
@@ -55,5 +59,5 @@ if __name__ == '__main__':
     print(list(zip(data,labels)))
     k_means.visualize_data("cluster1")
 
-    k_means.plot_elbow(range(1,3),"Elbow plot")
+    #k_means.plot_elbow(range(1,3),"Elbow plot",individ_plot=True)
 
