@@ -23,14 +23,14 @@ class kmeans():
         fig = plt.figure()
         centers = np.random.randn(4, 2)
         ax = fig.add_subplot(111)
-        scatter = ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels, s=50)
+        scatter = ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels, s=5)
         #for i, j in centers:
          #   ax.scatter(i, j, s=50, c='red', marker='+')
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         plt.colorbar(scatter)
 
-        plt.savefig(fname)
+        plt.savefig(fname,dpi=600)
 
 
 if __name__ == '__main__':
