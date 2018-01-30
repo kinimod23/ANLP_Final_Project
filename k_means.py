@@ -32,11 +32,13 @@ class kmeans():
 
         plt.savefig(fname,dpi=600)
 
-    def plot_elbow(self,k_range,fname):
+    def plot_elbow(self,k_range,fname,individ_plot=False):
         distorsions = []
         for k in k_range:
             labels, score = k_means.cluster(k)
             distorsions.append(score)
+            if individ_plot:
+                k_means.visualize_data("cluster_"+str(k))
 
         plt.figure(figsize=(15, 5))
         plt.xlabel("number of clusters: k")
