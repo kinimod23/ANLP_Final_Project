@@ -3,19 +3,20 @@ import gensim
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import string
-from matplotlib import pyplot as plt
-
-
-######### Das gehört zu Simons Änderungen ##########
+from k_means import kmeans
 from pprint import pprint
-from textblob import TextBlob
 
 class LDA():
     def __init__(self, filename1, filename2, stopwords, num_topics=10, no_below=20, no_above=0.5):
         self.num_topics = num_topics
         self.corpus = self.createCorpus(filename1, filename2, stopwords)
         self.model_corpus, self.dictionary = self.createModelCorpus(no_below, no_above)
-        self.model = self.train_lda()
+        try:
+            self.model = gensim.models.LdaModel.load("LDA_Models/ldamodel_topics="+str(num_topics)+"_no_above="+str(no_above))
+        except:
+            self.model = self.train_lda()
+            self.model.save("LDA_Models/ldamodel_topics="+str(num_topics)+"_no_above="+str(no_above))
+
         self.corpus_feature_vectors = self.apply_lda()
         self.final_output = self.createFinalOutput()
 
@@ -61,11 +62,13 @@ filename2 = "Corpora/filtered/filteredjust_hl_article_tokenized.txt"
 
 # no_below : No words which appear in less than X articles
 # no_above : No words which appear in more than X % of the articles
-lda = LDA(filename1, filename2 ,stopword, num_topics=10, no_below=20, no_above=0.8)
+
+lda = LDA(filename1, filename2 ,stopword, num_topics=6, no_below=20, no_above=0.5)
 
 corpus_feature_vectors = lda.corpus_feature_vectors
 output = lda.final_output
 
 pprint(output[:2])
 
-plt.plot(output)
+k_means = kmeans(output)
+k_means.plot_elbow(range(2, 10), "Elbow_plot", individ_plot=True)
