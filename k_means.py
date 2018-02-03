@@ -15,7 +15,7 @@ class kmeans():
         self.dir = "cluster_images/"+image_dir+"/"
         guardian = np.ones(998)
         sun = np.zeros(876)
-        self.both = np.concatenate([sun, guardian])
+        self.both = np.concatenate([guardian, sun])
 
 
     def cluster(self,k):
@@ -30,8 +30,8 @@ class kmeans():
         fig = plt.figure()
 
         ax = fig.add_subplot(111)
-        ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels,marker="^", s=self.both)
-        ax.scatter(X_reduced[:, 0], X_reduced[:, 1], c=self.labels,marker="o", s=(self.both-1)*-1)
+        ax.scatter(X_reduced[:, 0], X_reduced[:, 1], c=self.labels,marker="^", s=both*10, edgecolor="red", linewidth=0.3)
+        ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels,marker="o", s=((both-1)*-1)*10, edgecolor="black", linewidth=0.3)
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         #plt.colorbar(scatter)
