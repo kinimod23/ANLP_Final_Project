@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA, TruncatedSVD
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
+from itertools import groupby
 
 class kmeans():
 
@@ -57,18 +57,58 @@ class kmeans():
         plt.savefig(self.dir+fname,dpi=600)
         plt.close()
 
-    def plot_histogram(self,fname,k):
-        filename = fname+str(k)
+    def plot_histogram(self, fname, k):
+        #does not work
+        grouped = [[] for x in range(k)]
         # the histogram of the data
-        verteilung = zip(self.both,self.feature_vector)
-        #plt.hist(, k, normed=1, facecolor='g', alpha=0.75)
+        verteilung = list(zip(self.both, self.labels))
+        verteilung = sorted(verteilung,key=lambda x: x[1])
 
+        for key, group in groupby(verteilung, lambda x: x[1]):
+            for thing in group:
+                print(key,thing)
+                grouped[key].append(int(thing[0]))
 
-        plt.xlabel('Smarts')
-        plt.ylabel('Probability')
-        plt.title('Histogram of IQ')
-        plt.grid(True)
-        plt.savefig(filename)
+        plt.hist(grouped, k, histtype='bar',normed=1, alpha=0.75)
+        plt.tight_layout()
+        plt.savefig(self.dir+fname+str(k))
+        plt.clf()
+
+    def plot_histogram2(self, fname, k):
+        grouped = [[] for x in range(k)]
+        hist = [[] for x in range(k)]
+        # the histogram of the data
+        verteilung = list(zip(self.both, self.labels))
+        verteilung = sorted(verteilung, key=lambda x: x[1])
+
+        for key, group in groupby(verteilung, lambda x: x[1]):
+            for thing in group:
+                #print(key, thing)
+                grouped[key].append(int(thing[0]))
+            hist[key].append(np.histogram(grouped[key],bins=2)[0])
+
+        guardian = []
+        sun = []
+        for cluster in hist:
+            guardian.append(cluster[0][0])
+            sun.append(cluster[0][1])
+
+        ind = np.arange(k)  # the x locations for the groups
+        width = 0.35  # the width of the bars
+
+        fig, ax = plt.subplots()
+        rects1 = ax.bar(ind, guardian, width, color='b')
+        rects2 = ax.bar(ind + width, sun, width, color='y')
+
+        # add some text for labels, title and axes ticks
+        ax.set_ylabel('Frequency in topic clusters')
+        ax.set_title('Distribution of Guardian/Sun articles in each cluster')
+        ax.set_xticks(ind + width / 2)
+        ax.set_xticklabels(range(k))
+
+        ax.legend((rects1[0], rects2[0]), ('The Guardian', 'Sun'))
+        plt.savefig(self.dir + fname + str(k))
+        plt.clf()
 
 if __name__ == '__main__':
     data = [[0,1,2,3,4,5],[0,1,4,5,6,3],[7,4,3,2,3,4]]

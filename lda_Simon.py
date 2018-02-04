@@ -53,6 +53,8 @@ class LDA():
             output.append([(vec_dic[topic] if topic in vec_dic else 0) for topic in range(10)])
         return output
 
+    def get_topics(self):
+        return(self.model.show_topics(num_topics=7,num_words=3))
 
 stopword = stopwords.words("english") + list(string.punctuation)
 
@@ -62,14 +64,15 @@ filename2 = "Corpora/filtered/filteredjust_hl_article_tokenized.txt"
 
 # no_below : No words which appear in less than X articles
 # no_above : No words which appear in more than X % of the articles
-for num_topics in range(3,8):
-    for no_above in [0.3,0.4,0.5,0.6,0.7,0.8]:
-        lda = LDA(filename1, filename2 ,stopword, num_topics=num_topics, no_below=20, no_above=no_above)
+if __name__ == '__main__':
+    for num_topics in range(3,8):
+        for no_above in [0.3,0.4,0.5,0.6,0.7,0.8]:
+            lda = LDA(filename1, filename2 ,stopword, num_topics=num_topics, no_below=20, no_above=no_above)
 
-        corpus_feature_vectors = lda.corpus_feature_vectors
-        output = lda.final_output
+            corpus_feature_vectors = lda.corpus_feature_vectors
+            output = lda.final_output
 
-        #pprint(output[:2])
+            #pprint(output[:2])
 
-        k_means = kmeans(output,str(num_topics)+"_"+str(no_above))
-        k_means.plot_elbow(range(2, 10), "Elbow_plot", individ_plot=True)
+            k_means = kmeans(output,str(num_topics)+"_"+str(no_above))
+            k_means.plot_elbow(range(2, 10), "Elbow_plot", individ_plot=True)
