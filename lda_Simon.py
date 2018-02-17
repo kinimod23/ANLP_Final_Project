@@ -25,7 +25,7 @@ class LDA():
             with open(filename2, encoding="utf-8") as f2:
                 all_articles = f1.readlines()
                 all_articles.extend(f2.readlines())
-                corpus = [[token for token in article.strip().split(" ") if token not in stopword] for article in all_articles]
+                corpus = [[token for token in article.strip().split(" ") if token not in stopwords] for article in all_articles]
         return corpus
 
     def createModelCorpus(self, no_below, no_above):
