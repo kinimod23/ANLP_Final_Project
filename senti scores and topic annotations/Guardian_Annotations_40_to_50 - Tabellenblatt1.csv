@@ -1,0 +1,21 @@
+,Topic 1,Topic 2,Topic 3,Topic 4,Topic 5,Topic 6,Topic 7,Sentiment Score
+Article 40,immigration,leaving conditions,soft brexit,national interest,,,,-0.3
+extent 40,20,40,20,20,,,,
+Article 41,plural brexit coalition,soft brexit,uk inner conflict,article 50,,,,"-0,1"
+extent 41,60,20,10,10,,,,
+Article 42,economics,"article 50, leaving conditions",trade agreements,US,uk inner conflict,,,0
+extent 42,20,40,25,5,10,,,
+Article 43,uk inner conflict,impact of brexit,leaving conditions,restrained information,,,,0
+extent 43,25,20,20,30,,,,
+Aericle 44,impact of brexit,gender,,,,,,0.1
+extent 44,50,50,,,,,,
+Article 45,hard brexit,trade agreements,leaving conditions,impact of brexit,,,,0.2
+extent 45,40,25,15,20,,,,
+Article 46,contra brexit,labour party,leaving conditions,uk inner conflict,,,,-0.3
+extent 46,50,15,20,15,,,,
+Article 47,economics,germany,contra brexit,leaving conditions,,,,-0.1
+extent 47,30,30,30,10,,,,
+Article 48,"article 50, leaving conditions",restrained information,impact of brexit,,,,,0
+extent 48,40,40,20,,,,,
+Article 49,"same as article 49,,,,",,,,,,,"0,3"
+extent 49,,,,,,,,
