@@ -25,10 +25,14 @@ def compare_scores(automatic, manual, ok_range):
 	wrong_indices = []
 	ok_range = float(ok_range)
 	for i, (m_score, a_score) in enumerate(zip(automatic, manual)):
-		if (m_score - a_score) <= ok_range and (m_score - a_score) >= 0.0:
+		if abs(m_score - a_score) <= ok_range: #and (m_score - a_score) >= 0.0:
 			right += 1
+			print("right")
+			print(m_score, a_score)
 		else:
 			wrong += 1
+			print("wrong")
+			print(m_score, a_score)
 			wrong_indices.append(i)
 	return right, wrong, wrong_indices
 
