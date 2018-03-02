@@ -38,7 +38,7 @@ class LDA():
         '''applies LDA to tokenized articles in a txt-file where each article is
         separated by a newsline'''
         ldamodel = gensim.models.ldamulticore.LdaMulticore(self.model_corpus, num_topics=self.num_topics, id2word=self.dictionary, passes=10)
-        return ldamodel
+       return ldamodel
 
     def apply_lda(self):
         corpus_feature_vectors = []
@@ -53,8 +53,19 @@ class LDA():
             output.append([(vec_dic[topic] if topic in vec_dic else 0) for topic in range(10)])
         return output
 
-    def get_topics(self):
-        return(self.model.show_topics(num_topics=7,num_words=3))
+    def get_topics(self,num_topics=10,num_words=10):
+        #return topics without probabilites
+        topics = self.model.show_topics(num_topics=num_topics,num_words=num_words,formatted=False)
+        #print(topics)
+        all_topics = []
+        for topic in topics:
+            all_words = []
+            for word in topic[1]:
+                all_words.append(word[0])
+            all_topics.append(all_words)
+            #print(all_words)
+
+        return(all_topics)
 
 stopword = stopwords.words("english") + list(string.punctuation)
 

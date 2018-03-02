@@ -111,7 +111,9 @@ class kmeans():
         ax.set_xticklabels(range(k))
 
         ax.legend((rects1[0], rects2[0]), ('The Guardian', 'Telegraph'))
-        plt.savefig(self.dir + fname + str(k))
+
+        print(str(self.dir + fname))
+        plt.savefig(str(self.dir + fname))
         plt.clf()
 
 if __name__ == '__main__':
