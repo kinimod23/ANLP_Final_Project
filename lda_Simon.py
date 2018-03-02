@@ -37,7 +37,7 @@ class LDA():
     def train_lda(self):
         '''applies LDA to tokenized articles in a txt-file where each article is
         separated by a newsline'''
-        ldamodel = gensim.models.ldamodel.LdaModel(self.model_corpus, num_topics=self.num_topics, id2word=self.dictionary, passes=10)
+        ldamodel = gensim.models.ldamulticore.LdaMulticore(self.model_corpus, num_topics=self.num_topics, id2word=self.dictionary, passes=10)
         return ldamodel
 
     def apply_lda(self):
@@ -58,15 +58,16 @@ class LDA():
 
 stopword = stopwords.words("english") + list(string.punctuation)
 
-filename1 = "Corpora/filtered/filteredjust_hl_article_guardian_tokenized.txt"
-filename2 = "Corpora/filtered/filteredjust_hl_article_tokenized.txt"
+filename1 = "Corpora/filtered/filtered_just_hl_guardian.txt"
+filename2 = "Corpora/filtered/filteredhl_article_tele_lemmatized.txt"
 
 
 # no_below : No words which appear in less than X articles
 # no_above : No words which appear in more than X % of the articles
 if __name__ == '__main__':
-    for num_topics in range(3,8):
-        for no_above in [0.3,0.4,0.5,0.6,0.7,0.8]:
+    for num_topics in range(10,17,2):
+        for no_above in [0.5,0.6,0.7]:
+            print('Number Topics: ', num_topics, '   no above :', no_above)
             lda = LDA(filename1, filename2 ,stopword, num_topics=num_topics, no_below=20, no_above=no_above)
 
             corpus_feature_vectors = lda.corpus_feature_vectors

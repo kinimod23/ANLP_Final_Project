@@ -34,8 +34,8 @@ class kmeans():
         fig = plt.figure()
 
         ax = fig.add_subplot(111)
-        ax.scatter(X_reduced[:, 0], X_reduced[:, 1], c=self.labels,marker="^", s=both*10, edgecolor="red", linewidth=0.3)
-        ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels,marker="o", s=((both-1)*-1)*10, edgecolor="black", linewidth=0.3)
+        ax.scatter(X_reduced[:, 0], X_reduced[:, 1], c=self.labels,marker="^", s=self.both*10, edgecolor="red", linewidth=0.3)
+        ax.scatter(X_reduced[:,0], X_reduced[:,1], c=self.labels,marker="o", s=((self.both-1)*-1)*10, edgecolor="black", linewidth=0.3)
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         #plt.colorbar(scatter)
@@ -92,32 +92,32 @@ class kmeans():
             hist[key].append(np.histogram(grouped[key],bins=2)[0])
 
         guardian = []
-        sun = []
+        telegraph = []
         for cluster in hist:
             guardian.append(cluster[0][0])
-            sun.append(cluster[0][1])
+            telegraph.append(cluster[0][1])
 
         ind = np.arange(k)  # the x locations for the groups
         width = 0.35  # the width of the bars
 
         fig, ax = plt.subplots()
         rects1 = ax.bar(ind, guardian, width, color='b')
-        rects2 = ax.bar(ind + width, sun, width, color='y')
+        rects2 = ax.bar(ind + width, telegraph, width, color='y')
 
         # add some text for labels, title and axes ticks
         ax.set_ylabel('Frequency in topic clusters')
-        ax.set_title('Distribution of Guardian/Sun articles in each cluster')
+        ax.set_title('Distribution of Guardian/Telegraph articles in each cluster')
         ax.set_xticks(ind + width / 2)
         ax.set_xticklabels(range(k))
 
-        ax.legend((rects1[0], rects2[0]), ('The Guardian', 'Sun'))
+        ax.legend((rects1[0], rects2[0]), ('The Guardian', 'Telegraph'))
         plt.savefig(self.dir + fname + str(k))
         plt.clf()
 
 if __name__ == '__main__':
     stopword = stopwords.words("english") + list(string.punctuation)
-    filename1 = "Corpora/filtered/filteredjust_hl_article_guardian_tokenized.txt"
-    filename2 = "Corpora/filtered/filteredjust_hl_article_tokenized.txt"
+    filename1 = "Corpora/filtered/filteredhl_article_guardian.txt"
+    filename2 = "Corpora/filtered/filteredjust_hl_article_tele_lemmatized.txt"
 
     # no_below : No words which appear in less than X articles
     # no_above : No words which appear in more than X % of the articles
