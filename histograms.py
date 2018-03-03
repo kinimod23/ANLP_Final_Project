@@ -9,14 +9,14 @@ stopword = stopwords.words("english") + list(string.punctuation) + more_stopword
 
 #print(stopword)
 filename1 = "Corpora/filtered/filteredjust_hl_article_guardian_lemmatized.txt"
-filename2 = "Corpora/lemmatized/hl_article_tele_lemmatized.txt"
+filename2 = "Corpora/filtered/filteredhl_article_tele_lemmatized.txt"
 
 
 # no_below : No words which appear in less than X articles
 # no_above : No words which appear in more than X % of the articles
 
-for num_topics in range(3, 8):
-    for no_above in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
+for num_topics in range(6, 9, 2):
+    for no_above in [0.5, 0.6, 0.7]:
         lda = LDA(filename1, filename2, stopword, num_topics=num_topics, no_below=20, no_above=no_above)
         corpus_feature_vectors = lda.corpus_feature_vectors
         output = lda.final_output
@@ -26,7 +26,7 @@ for num_topics in range(3, 8):
             for topic_words in topics:
                 top.write(str(topic_words) + ",")
             top.write("\n")
-        for k in [3,4,5,6,7]:
+        for k in range(4,17,2):
             k_means = kmeans(output, "histograms")
             labels,score = k_means.cluster(k)
             k_means.plot_histogram2("num_topics="+str(num_topics)+"_no_above="+str(no_above).replace(".","")+"_k="+str(k),k)
