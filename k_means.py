@@ -7,7 +7,7 @@ import os
 from itertools import groupby
 from nltk.corpus import stopwords
 import string
-#from lda_Simon import LDA
+from lda_Simon import LDA
 
 class kmeans():
 
@@ -19,17 +19,25 @@ class kmeans():
         guardian = np.ones(998)
         sun = np.zeros(876)
         self.both = np.concatenate([guardian, sun])
+        self.centroids=None
 
 
     def cluster(self,k):
+        '''
+        partitions the data into k clusters using the k_means algorithm
+        '''
         clustering = KMeans(n_clusters=k,random_state=self.r_state)
         labels = clustering.fit_predict(self.feature_vector)
         self.labels = labels
+
         self.centroids = clustering.cluster_centers_
         return(labels,clustering.inertia_)
 
     def visualize_data(self,fname):
-
+        '''
+        shows a 2-dimensional scatter plot of data with each color representing the cluster and the
+        form of the data point (triange/circle) indicates from which newspaper the article is
+        '''
         X_reduced = PCA(n_components=2).fit_transform(self.feature_vector)
         fig = plt.figure()
 
@@ -46,6 +54,9 @@ class kmeans():
         plt.close()
 
     def plot_elbow(self,k_range,fname,individ_plot=False):
+        '''
+        plots the intra-cluster distance of all clustr against different number of cluster. Needs the range of k.
+        '''
         distorsions = []
         for k in k_range:
             labels, score = self.cluster(k)
@@ -61,24 +72,10 @@ class kmeans():
         plt.savefig(self.dir+fname,dpi=600)
         plt.close()
 
-    def plot_histogram(self, fname, k):
-        #does not work
-        grouped = [[] for x in range(k)]
-        # the histogram of the data
-        verteilung = list(zip(self.both, self.labels))
-        verteilung = sorted(verteilung,key=lambda x: x[1])
-
-        for key, group in groupby(verteilung, lambda x: x[1]):
-            for thing in group:
-                print(key,thing)
-                grouped[key].append(int(thing[0]))
-
-        plt.hist(grouped, k, histtype='bar',normed=1, alpha=0.75)
-        plt.tight_layout()
-        plt.savefig(self.dir+fname+str(k))
-        plt.clf()
-
     def plot_histogram2(self, fname, k):
+        '''
+        plots the histogram for the distribution of articles in each cluster
+        '''
         grouped = [[] for x in range(k)]
         hist = [[] for x in range(k)]
         # the histogram of the data
@@ -117,21 +114,23 @@ class kmeans():
         plt.clf()
 
 if __name__ == '__main__':
-    stopword = stopwords.words("english") + list(string.punctuation)
-    filename1 = "Corpora/filtered/filteredhl_article_guardian.txt"
-    filename2 = "Corpora/filtered/filteredjust_hl_article_tele_lemmatized.txt"
+    more_stopwords = ["Mrs", "Mr"]
+    stopword = stopwords.words("english") + list(string.punctuation) + more_stopwords
+
+    # print(stopword)
+    filename1 = "Corpora/filtered/filteredjust_hl_article_guardian_lemmatized.txt"
+    filename2 = "Corpora/filtered/filteredhl_article_tele_lemmatized.txt"
 
     # no_below : No words which appear in less than X articles
     # no_above : No words which appear in more than X % of the articles
-    lda = LDA(filename1, filename2, stopword, num_topics=7, no_below=20, no_above=0.5)
-    corpus_feature_vectors = lda.corpus_feature_vectors
-    output = lda.final_output
+    for num_topics in range(10, 15, 2):
+        for no_above in [0.5, 0.6, 0.7]:
+            lda = LDA(filename1, filename2, stopword, num_topics=num_topics, no_below=20, no_above=no_above)
+            corpus_feature_vectors = lda.corpus_feature_vectors
+            output = lda.final_output
 
-    k_means = kmeans(output,"test")
-    labels,score = k_means.cluster(7)
-    print(k_means.centroids)
-    #print(list(zip(data,labels)))
-    #k_means.visualize_data("cluster1")
+            k_means = kmeans(output, "num_topics="+str(num_topics)+"_no_above="+str(no_above).replace(".",""))
 
-    #k_means.plot_elbow(range(1,3),"Elbow plot",individ_plot=True)
+            #print(k_means.centroids)
+            k_means.plot_elbow(range(4,17,2), "Elbow plot", individ_plot=True)
 

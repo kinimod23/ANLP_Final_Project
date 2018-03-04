@@ -3,7 +3,7 @@ import gensim
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import string
-from k_means import kmeans
+#from k_means import kmeans
 from pprint import pprint
 
 class LDA():
@@ -67,7 +67,7 @@ class LDA():
 
         return(all_topics)
 
-stopword = stopwords.words("english") + list(string.punctuation)
+stopword = stopwords.words("english") + list(string.punctuation) + ["Mrs", "Mr"]
 
 filename1 = "Corpora/filtered/filteredjust_hl_article_guardian_lemmatized.txt"
 filename2 = "Corpora/filtered/filteredhl_article_tele_lemmatized.txt"
@@ -76,7 +76,7 @@ filename2 = "Corpora/filtered/filteredhl_article_tele_lemmatized.txt"
 # no_below : No words which appear in less than X articles
 # no_above : No words which appear in more than X % of the articles
 if __name__ == '__main__':
-    for num_topics in range(10,15,2):
+    for num_topics in range(6,11,2):
         for no_above in [0.5,0.6,0.7]:
             print('Number Topics: ', num_topics, '   no above :', no_above)
             lda = LDA(filename1, filename2 ,stopword, num_topics=num_topics, no_below=20, no_above=no_above)
