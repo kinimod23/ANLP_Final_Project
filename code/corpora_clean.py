@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jan 17 09:29:42 2018
-
-@author: freyahewett
-"""
 import re
 
 sun_text = open("sun.txt").read()
@@ -20,11 +13,7 @@ with open("just_hl_article.txt", "w") as output_file:
         article2 = article.replace("\n", " ")
         article4 = re.sub(r"^(.*National Edition)", "", article2)
         article5 = re.sub(r"^(.*Edition [0-9]*;)", "", article4)
-<<<<<<< HEAD
         article6 = re.sub(r"([a-zA-Z.]*@the[-]*sun\.co\.uk.*)$", "", article5)
-=======
-        article6 = re.sub(r"(@the[-]*sun\.co\.uk.*)$", "", article5)
->>>>>>> f7a808591dcc39c990accf08fd1349ed69a14253
         article7 = re.sub(r"(BYLINE: .* [0-9]* words)", "", article6)
         article8 = re.sub(r"(LOAD-DATE.*)$", "", article7)
         article9 = re.sub(r"(SECTION: .* LETTER)", "", article8)
