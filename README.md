@@ -1,4 +1,4 @@
-# ANLP_Final_Project
+# ANLP Final Project
 
 ## Final project (code & sample outputs) is in the notebook "All_scripts.ipynb"
 
