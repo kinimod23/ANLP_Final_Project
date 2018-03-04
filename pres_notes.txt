@@ -1,33 +1,0 @@
-PRÄSI NOTES
-
-1 Motivation
-
-People opinion about newest topicsNewspaper (political stance) influence public opinion, so the language is importantErleichtern der Meinungsbildung, wenn schon weiß How newspaper presents a topic
-
-Talk about corpus:
-Brexit, Telegraph/Guardian/Sun, 3000 articles, übergang to next slide > pipeline
-
-2 Pipeline
-
-We oriented our work toward Burscher et al. they diachronically analysed the frames in the nuclear power debate
-What we tried out so far
--corpus > preprocessing
--topic modelling (LDA, we all know from lecture)
--feature vectors (what does this mean?)
--clustering, k-means (bisecting)-Sentiment Analysis, including negation and aspect based?
-
--…and manual annotation of topics, sentiment, etc. (also lda requires some manual input) 
-
-3 Initial results
--talk about Abbildungen - what do they mean
--HOWEVER, we haven’t yet done any manual evaluation / have no comparison
--initial results show no meaningful difference between articles
--we have now enlarged our corpus, ‘Telegraph’
--changes to preprocessing: remove more words in initial stage
--sentiment analysis???
-
-4 What we still need to do
--manual evaluation
--refinement of clustering/topic modelling methods
-
-5 Thanks, Quellen, questions, Anregungen

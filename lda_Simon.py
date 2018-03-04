@@ -53,19 +53,22 @@ class LDA():
             output.append([(vec_dic[topic] if topic in vec_dic else 0) for topic in range(10)])
         return output
 
-    def get_topics(self,num_topics=10,num_words=10):
+    def get_topics(self,num_topics=10,num_words=10,probs=False):
         #return topics without probabilites
         topics = self.model.show_topics(num_topics=num_topics,num_words=num_words,formatted=False)
         #print(topics)
-        all_topics = []
-        for topic in topics:
-            all_words = []
-            for word in topic[1]:
-                all_words.append(word[0])
-            all_topics.append(all_words)
-            #print(all_words)
+        if not(probs):
+            all_topics = []
+            for topic in topics:
+                all_words = []
+                for word in topic[1]:
+                    all_words.append(word[0])
+                all_topics.append(all_words)
+                #print(all_words)
 
-        return(all_topics)
+            return(all_topics)
+        else:
+            return topics
 
 stopword = stopwords.words("english") + list(string.punctuation) + ["Mrs", "Mr"]
 
