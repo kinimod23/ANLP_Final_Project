@@ -1,6 +1,7 @@
 # ANLP Final Project
 
 ## Final project (code & sample outputs) is in the notebook "All_scripts.ipynb"
++ All_scripts.py should be opened in jupter to show the images
 
 ### Additional info
 + LDA, k-means clustering & sentiment analysis
